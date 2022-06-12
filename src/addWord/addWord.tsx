@@ -3,6 +3,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import axios from 'axios';
 import settings from '../settings.json'
+import { useNavigate } from 'react-router-dom';
 const backend_api = settings['backend_api']
 
 
@@ -34,9 +35,12 @@ function Input({ name, label, register, required }: any){
 }
 
 function AddWord() {
+  const navigate = useNavigate();
+
   const { register, handleSubmit, watch, formState: { errors } } = useForm({
     resolver: yupResolver(schema)
   });
+
   function onSubmit(data: any){
     axios.post(`${backend_api}/words/`, {
         user: 'http://127.0.0.1:8000/users/1/',
@@ -44,8 +48,9 @@ function AddWord() {
         translated_word: data['translation'],
         knowledge: data['knowledge'],
         relevance: data['relevance'],
+        score: data['relevance'] + 6 - data['knowledge']
       })
-    console.log(data);
+      navigate(-1)
   }
 
   return (
@@ -57,7 +62,7 @@ function AddWord() {
         <Input name='knowledge' label='Knowledge (1-5)' register={register} required />
         <Input name='relevance' label='Relevance (1-5)' register={register} required />
         
-        <input type='submit' />
+        <input type='submit'/>
       </form>
     </>
   );
