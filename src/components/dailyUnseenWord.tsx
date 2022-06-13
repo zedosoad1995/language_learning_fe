@@ -17,6 +17,8 @@ function DailyUnseenWord() {
       .then(response => {
 				const unseenWord = response.data.results.find((word: any) => !word.is_seen)
         setWord(unseenWord)
+				setKnowledge(unseenWord.knowledge)
+				setRelevance(unseenWord.relevance)
       })
   }
 
@@ -39,6 +41,10 @@ function DailyUnseenWord() {
 						<Card.Text>
 							Translation: {word['translated_word']}
 						</Card.Text>
+						<Form.Check 
+							type='checkbox'
+							label='I already know this word'
+						/>
 						<ButtonToolbar>
 							<ListGroupItem>Knowledge:</ListGroupItem>
 							<ButtonGroup>
@@ -57,10 +63,6 @@ function DailyUnseenWord() {
 								))}
 							</ButtonGroup>
 						</ButtonToolbar>
-						<Form.Check 
-							type='checkbox'
-							label='I already know this word'
-						/>
 						<ButtonToolbar>
 							<ListGroupItem>Relevance:</ListGroupItem>
 							<ButtonGroup>
