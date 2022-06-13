@@ -1,14 +1,12 @@
-import { useNavigate } from "react-router-dom";
 import Card from 'react-bootstrap/Card'  
 import { useEffect, useState } from "react";
 import axios from 'axios';
 import settings from '../settings.json'
 const backend_api = settings['backend_api']
 
-function Home() {
-  const navigate = useNavigate();
 
-  const [words, setWords] = useState([])
+function WordsOfTheDay() {
+	const [words, setWords] = useState([])
 
   const fetchData = () => {
     axios.get(`${backend_api}/words/`)
@@ -21,17 +19,14 @@ function Home() {
     fetchData()
   }, [])
 
-  return (
+	return (
     <>
-      <button onClick={() => navigate("/add_word")}>
-        Add Word
-      </button>
       <h1>Words of the day</h1>
       <ul>
-        {words.map((word) =>
+        {words.map((word, counter) =>
           <Card
             border='primary'
-            key='primary'
+            key={counter}
             style={{ width: '18rem' }}
             className='mb-2'
             onClick={() => alert(`Hello from here: ${word['original_word']}`)}
@@ -49,4 +44,4 @@ function Home() {
   );
 }
 
-export default Home;
+export default WordsOfTheDay;

@@ -1,7 +1,7 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import AddWord from "./addWord/addWord";
+import AddWord from "./components/addWord";
 import './App.css';
-import Home from "./home/home";
+import Home from "./components/home";
 
 function App() {
   return (
