@@ -3,47 +3,68 @@ import { useEffect, useState } from "react";
 import axios from 'axios';
 import _ from 'lodash'
 import settings from '../settings.json'
-import { ButtonGroup, ToggleButton, ButtonToolbar, ListGroupItem, Form } from 'react-bootstrap';
+import { Button, ButtonGroup, ToggleButton, ButtonToolbar, ListGroupItem, Form } from 'react-bootstrap';
 const backend_api = settings['backend_api']
 
 
-function DailyUnseenWord() {
-	const [word, setWord]: [any, any] = useState({})
+function DailyUnseenWord({words, onUpdateWords}: {words: Array<any>, onUpdateWords: any}) {
+	const [word, setWord]: [any, any] = useState()
 	const [knowledge, setKnowledge] = useState(1)
 	const [relevance, setRelevance] = useState(1)
+	const [wordLearned, setWordLearned] = useState(false)
 
-  const fetchData = () => {
-    axios.get(`${backend_api}/words/`)
-      .then(response => {
-				const unseenWord = response.data.results.find((word: any) => !word.is_seen)
-        setWord(unseenWord)
-				setKnowledge(unseenWord.knowledge)
-				setRelevance(unseenWord.relevance)
-      })
-  }
+
+	const getUnseenWord = () => {
+		const unseenWord = words.find((word: any) => !word.is_seen)
+		if(!unseenWord){
+			setWord()
+			return
+		}
+
+		setWordLearned(false)
+		setWord(unseenWord)
+		setKnowledge(unseenWord.knowledge)
+		setRelevance(unseenWord.relevance)
+	}
+
+	const nextWord = () => {
+		if(word && 'id' in word){
+			axios.patch(`${backend_api}/words/${word.id}/`, {
+				knowledge,
+				relevance,
+				is_seen: true,
+				is_learned: wordLearned
+			})
+			.then(() => {
+				onUpdateWords()
+			})
+		}
+	}
 
   useEffect(() => {
-    fetchData()
-  }, [])
+    getUnseenWord()
+		onUpdateWords()
+  }, [JSON.stringify(words)])
 
 	return (
     <>
-			{Object.keys(word).length > 0 &&
+			{word &&
 				<Card
 					border='primary'
 					key={word.pk}
 					style={{ width: '22rem' }}
 					className='mb-2'
-					onClick={() => console.log(`Hello from here: ${word.original_word}`)}
 				>
 					<Card.Body>
 						<Card.Title>{word['original_word']}</Card.Title>
 						<Card.Text>
 							Translation: {word['translated_word']}
 						</Card.Text>
-						<Form.Check 
+						<Form.Check
+							onChange={() => {setWordLearned(!wordLearned)}}
 							type='checkbox'
 							label='I already know this word'
+							checked={wordLearned}
 						/>
 						<ButtonToolbar>
 							<ListGroupItem>Knowledge:</ListGroupItem>
@@ -81,9 +102,9 @@ function DailyUnseenWord() {
 								))}
 							</ButtonGroup>
 						</ButtonToolbar>
+						<Button onClick={nextWord}>Next</Button>
 					</Card.Body>
-				</Card>
-			}
+				</Card>}
     </>
   );
 }

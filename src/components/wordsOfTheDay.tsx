@@ -1,24 +1,7 @@
 import Card from 'react-bootstrap/Card'  
-import { useEffect, useState } from "react";
-import axios from 'axios';
-import settings from '../settings.json'
-const backend_api = settings['backend_api']
 
 
-function WordsOfTheDay() {
-	const [words, setWords] = useState([])
-
-  const fetchData = () => {
-    axios.get(`${backend_api}/words/`)
-      .then(response => {
-        setWords(response.data.results)
-      })
-  }
-
-  useEffect(() => {
-    fetchData()
-  }, [])
-
+function WordsOfTheDay({words}: {words: Array<any>}) {
 	return (
     <>
       <h1>Words of the day</h1>

@@ -9,3 +9,7 @@
 .form-check-label {
     padding: 0
 }
+
+[type="checkbox"]:checked:before {
+    content: '';
+}

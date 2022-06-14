@@ -43,7 +43,7 @@ function AddWord() {
 
   function onSubmit(data: any){
     axios.post(`${backend_api}/words/`, {
-        user: 'http://127.0.0.1:8000/users/1/',
+        user: 2,
         original_word: data['original'],
         translated_word: data['translation'],
         knowledge: data['knowledge'],
