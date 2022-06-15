@@ -3,6 +3,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import axios from 'axios';
 import settings from '../settings.json'
+import moment from 'moment';
 import { useNavigate } from 'react-router-dom';
 const backend_api = settings['backend_api']
 
@@ -42,13 +43,17 @@ function AddWord() {
   });
 
   function onSubmit(data: any){
+    const date = new Date();
+    const offset_minutes = -date.getTimezoneOffset()
     axios.post(`${backend_api}/words/`, {
-        user: 2,
+        user: 1,
         original_word: data['original'],
         translated_word: data['translation'],
         knowledge: data['knowledge'],
         relevance: data['relevance'],
-        score: data['relevance'] + 6 - data['knowledge']
+        score: data['relevance'] + 6 - data['knowledge'],
+        is_new: true,
+        created_at_local: moment(date).add(offset_minutes, 'm').format("YYYY-MM-DDTHH:mm:ss.sssZZ")
       })
       navigate(-1)
   }

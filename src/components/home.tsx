@@ -11,6 +11,12 @@ function Home() {
   const [words, setWords] = useState([])
   const [isDailyWordsSeen, setIsDailyWordsSeen] = useState(true)
 
+  const updateData = () => {
+    return axios.post(`${backend_api}/words/update/`, {
+      'timezone': Intl.DateTimeFormat().resolvedOptions().timeZone
+    })
+  }
+
   const fetchData = () => {
     axios.get(`${backend_api}/words/`)
       .then(response => {
@@ -23,7 +29,8 @@ function Home() {
   }
 
   useEffect(() => {
-    fetchData()
+    updateData()
+      .then(fetchData)
   }, [])
 
   const onUpdateDailyUnseenWords = () => {
