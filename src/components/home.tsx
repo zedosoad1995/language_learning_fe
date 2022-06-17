@@ -1,10 +1,9 @@
-import axios from "axios";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import DailyUnseenWord from "./dailyUnseenWord";
 import WordsOfTheDay from "./wordsOfTheDay";
-import settings from '../settings.json'
-const backend_api = settings['backend_api']
+import { axiosInstance } from "../axios";
+
 
 function Home() {
   const navigate = useNavigate();
@@ -12,13 +11,13 @@ function Home() {
   const [isDailyWordsSeen, setIsDailyWordsSeen] = useState(true)
 
   const updateData = () => {
-    return axios.post(`${backend_api}/words/update/`, {
+    return axiosInstance.post(`words/update/`, {
       'timezone': Intl.DateTimeFormat().resolvedOptions().timeZone
     })
   }
 
   const fetchData = () => {
-    axios.get(`${backend_api}/words/`)
+    axiosInstance.get(`words/`)
       .then(response => {
         setWords(response.data)
         return response.data

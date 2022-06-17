@@ -1,10 +1,8 @@
 import Card from 'react-bootstrap/Card'  
 import { useEffect, useState } from "react";
-import axios from 'axios';
 import _ from 'lodash'
-import settings from '../settings.json'
 import { Button, ButtonGroup, ToggleButton, ButtonToolbar, ListGroupItem, Form } from 'react-bootstrap';
-const backend_api = settings['backend_api']
+import { axiosInstance } from '../axios';
 
 
 function DailyUnseenWord({words, onUpdateWords}: {words: Array<any>, onUpdateWords: any}) {
@@ -29,7 +27,7 @@ function DailyUnseenWord({words, onUpdateWords}: {words: Array<any>, onUpdateWor
 
 	const nextWord = () => {
 		if(word && 'id' in word){
-			axios.patch(`${backend_api}/words/${word.id}/`, {
+			axiosInstance.patch(`words/${word.id}/`, {
 				knowledge,
 				relevance,
 				is_seen: true,

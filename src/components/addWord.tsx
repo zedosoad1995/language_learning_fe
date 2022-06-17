@@ -1,11 +1,9 @@
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
-import axios from 'axios';
-import settings from '../settings.json'
 import moment from 'moment';
 import { useNavigate } from 'react-router-dom';
-const backend_api = settings['backend_api']
+import { axiosInstance } from '../axios';
 
 
 const schema = yup.object({
@@ -45,7 +43,7 @@ function AddWord() {
   function onSubmit(data: any){
     const date = new Date();
     const offset_minutes = -date.getTimezoneOffset()
-    axios.post(`${backend_api}/words/`, {
+    axiosInstance.post(`words/`, {
         user: 1,
         original_word: data['original'],
         translated_word: data['translation'],
