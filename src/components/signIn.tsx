@@ -14,6 +14,7 @@ import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useNavigate } from 'react-router-dom';
 import { axiosInstance } from '../axios';
+import { useEffect, useState } from "react";
 
 
 function Copyright(props: any) {
@@ -32,7 +33,8 @@ function Copyright(props: any) {
 const theme = createTheme();
 
 export default function SignIn() {
-    const navigate = useNavigate();
+  const navigate = useNavigate();
+
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
@@ -46,7 +48,7 @@ export default function SignIn() {
             localStorage.setItem('access_token', res.data.access)
             localStorage.setItem('refresh_token', res.data.refresh)
             axiosInstance.defaults.headers.common['Authorization'] = 'JWT ' + localStorage.getItem('access_token')
-            navigate('/')
+            navigate(-1)
         })
   }
 
