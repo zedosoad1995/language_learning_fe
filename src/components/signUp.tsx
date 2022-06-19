@@ -11,8 +11,9 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { axiosInstance } from '../axios';
 import { useNavigate } from 'react-router-dom';
+import httpRequest from '../services/httpRequest';
+
 
 function Copyright(props: any) {
   return (
@@ -36,17 +37,19 @@ export default function SignUp() {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
 
-    delete axiosInstance.defaults.headers.common['Authorization']
+    const payload = {
+      username: data.get('username'),
+      password: data.get('password'),
+      email: data.get('email'),
+      first_name: data.get('firstName'),
+      last_name: data.get('lastName'),
+      timezone: Intl.DateTimeFormat().resolvedOptions().timeZone
+    }
 
-    axiosInstance
-			.post('users/', {
-				username: data.get('username'),
-				password: data.get('password'),
-				email: data.get('email'),
-				first_name: data.get('firstName'),
-				last_name: data.get('lastName'),
-				timezone: Intl.DateTimeFormat().resolvedOptions().timeZone
-			})
+    localStorage.removeItem('access_token')
+		localStorage.removeItem('refresh_token')
+
+    httpRequest('POST', 'users/', payload)
 			.then(() => {
 				navigate('/login')
 			})

@@ -2,7 +2,7 @@ import Card from 'react-bootstrap/Card'
 import { useEffect, useState } from "react";
 import _ from 'lodash'
 import { Button, ButtonGroup, ToggleButton, ButtonToolbar, ListGroupItem, Form } from 'react-bootstrap';
-import { axiosInstance } from '../axios';
+import httpRequest from '../services/httpRequest';
 
 
 function DailyUnseenWord({words, onUpdateWords}: {words: Array<any>, onUpdateWords: any}) {
@@ -27,15 +27,17 @@ function DailyUnseenWord({words, onUpdateWords}: {words: Array<any>, onUpdateWor
 
 	const nextWord = () => {
 		if(word && 'id' in word){
-			axiosInstance.patch(`words/${word.id}/`, {
+			const data = {
 				knowledge,
 				relevance,
 				is_seen: true,
 				is_learned: wordLearned
-			})
-			.then(() => {
-				onUpdateWords()
-			})
+			}
+
+			httpRequest('PATCH', `words/${word.id}/`, data)
+				.then(() => {
+					onUpdateWords()
+				})
 		}
 	}
 

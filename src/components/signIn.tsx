@@ -13,7 +13,7 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useNavigate } from 'react-router-dom';
-import { axiosInstance } from '../axios';
+import httpRequest from '../services/httpRequest';
 
 
 function Copyright(props: any) {
@@ -37,19 +37,18 @@ export default function SignIn() {
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
+
+    const payload = {
+      username: data.get('username'),
+      password: data.get('password'),
+    }
     
-    axiosInstance
-        .post('token/', {
-            username: data.get('username'),
-            password: data.get('password'),
-        })
-        .then((res) => {
-            localStorage.setItem('access_token', res.data.access)
-            localStorage.setItem('refresh_token', res.data.refresh)
-            axiosInstance.defaults.headers.common['Authorization'] = 'JWT ' + localStorage.getItem('access_token')
-            navigate('/', { replace: true })
-            window.location.reload()
-        })
+    httpRequest('POST', 'token/', payload)
+      .then((res) => {
+        localStorage.setItem('access_token', res.data.access)
+        localStorage.setItem('refresh_token', res.data.refresh)
+        navigate('/')
+      })
   }
 
   return (
