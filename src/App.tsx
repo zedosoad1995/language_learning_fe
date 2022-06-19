@@ -6,11 +6,13 @@ import SignIn from "./components/signIn";
 import SignUp from "./components/signUp";
 import Logout from "./components/logout";
 import PrivateRoute from "./components/privateRoute";
+import Header from "./components/header";
 
 
 function App() {
   return (
     <div className="container">
+      <Header />
       <Router>
         <Routes>
           <Route path="/" element={<Home/>} />
