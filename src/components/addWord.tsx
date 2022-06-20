@@ -45,13 +45,11 @@ function AddWord() {
     const offset_minutes = -date.getTimezoneOffset()
 
     const payload = {
-      user: 1,
       original_word: data['original'],
       translated_word: data['translation'],
       knowledge: data['knowledge'],
       relevance: data['relevance'],
       score: data['relevance'] + 6 - data['knowledge'],
-      is_new: true,
       created_at_local: moment(date).add(offset_minutes, 'm').format("YYYY-MM-DDTHH:mm:ss.sssZZ")
     }
 
