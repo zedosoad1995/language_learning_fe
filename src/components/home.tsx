@@ -19,7 +19,7 @@ function Home() {
   }
 
   const fetchData = () => {
-    httpRequest('GET', `words/`)
+    httpRequest('GET', `words/daily/`)
       .then(response => {
         setWords(response.data)
         return response.data
