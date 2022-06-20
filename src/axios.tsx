@@ -76,6 +76,13 @@ axiosInstance.interceptors.response.use(
 				console.log('Refresh token not available.');
 				window.location.href = '/login/';
 			}
+		} else if(
+			error.response.status === 401 &&
+			error.response.statusText === 'Unauthorized' &&
+			error.response.data.detail === 'Authentication credentials were not provided.'
+		) {
+			console.log('No credentials provided.');
+			window.location.href = '/login/';
 		}
 
 		// specific error handling done elsewhere
