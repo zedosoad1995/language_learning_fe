@@ -54,7 +54,7 @@ function AddWord() {
     }
 
     httpRequest('POST', `words/`, payload)
-    navigate(-1)
+    navigate('/')
   }
 
   return (
