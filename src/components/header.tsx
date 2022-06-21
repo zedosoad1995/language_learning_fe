@@ -11,8 +11,11 @@ export default function Header(){
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
         <Toolbar>
-          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+          <Typography noWrap variant="h6" color="inherit" component="a" href="/" sx={{ display: 'flex', textDecoration: 'none', }}>
             Vocabulary
+          </Typography>
+          <Typography noWrap variant="h6" color="inherit" component="a" href="/word_list" sx={{ flexGrow: 1, textDecoration: 'none', }}>
+            Words
           </Typography>
           <Button color="inherit" href="/register">Register</Button>
           <Button color="inherit" href="/login">Login</Button>
