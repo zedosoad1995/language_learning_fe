@@ -38,7 +38,7 @@ export default function WordsList() {
             }
             disablePadding
           >
-            <ListItemButton dense>
+            <ListItemButton dense href={`/word/${word.id}`}>
               <ListItemText primary={word.original_word} />
             </ListItemButton>
           </ListItem>

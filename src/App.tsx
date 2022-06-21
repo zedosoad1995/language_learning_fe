@@ -7,7 +7,8 @@ import SignUp from "./components/signUp";
 import Logout from "./components/logout";
 import PrivateRoute from "./components/privateRoute";
 import Header from "./components/header";
-import WordsList from "./components/listOfWords";
+import WordsList from "./components/wordsList";
+import WordDetail from "./components/wordDetail";
 
 
 function App() {
@@ -21,7 +22,8 @@ function App() {
           <Route path="/login" element={<SignIn />} />
           <Route path="/register" element={<SignUp />} />
           <Route path="/logout" element={<Logout />} />
-          <Route path="/list" element={<WordsList />} />
+          <Route path="/word_list" element={<WordsList />} />
+          <Route path="/word/:id" element={<WordDetail />} />
         </Routes>
       </Router>
     </div>
