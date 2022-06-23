@@ -13,15 +13,24 @@ import httpRequest from '../services/httpRequest';
 
 
 export default function WordsList() {
-	const [words, setWords] = useState([])
+	const [words, setWords]: [any, any] = useState([])
 
-	useEffect(() => {
-		httpRequest('GET', `words/`)
-      .then(response => {
-				console.log(response.data)
+  const updateList = () => {
+    httpRequest('GET', `words/`)
+      .then((response: any) => {
         setWords(response.data)
       })
+  }
+
+	useEffect(() => {
+		updateList()
 	}, [])
+
+  const deleteWord = (e: any) => {
+    const id = e.currentTarget.getAttribute('data-index')
+    httpRequest('DEL', `words/${id}/`)
+      .then(() => {updateList()})
+  }
   
 
   return (
@@ -30,9 +39,9 @@ export default function WordsList() {
 
         return (
           <ListItem
-            key={word}
+            key={word.id}
             secondaryAction={
-              <IconButton edge="end" aria-label="comments">
+              <IconButton data-index={word.id} onClick={deleteWord} edge="end" aria-label="comments">
                 <DeleteIcon />
               </IconButton>
             }
