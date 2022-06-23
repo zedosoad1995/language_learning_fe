@@ -1,28 +1,33 @@
-import Card from 'react-bootstrap/Card'  
+import Typography from '@mui/material/Typography';
+import Card from '@mui/material/Card';
+import CardActions from '@mui/material/CardActions';
+import CardContent from '@mui/material/CardContent';
+import Button from '@mui/material/Button';
+import Stack from '@mui/material/Stack';
+import Container from '@mui/material/Container';
 
 
 function WordsOfTheDay({words}: {words: Array<any>}) {
 	return (
     <>
-      <h1>Words of the day</h1>
-      <ul>
+      <Typography variant='h4' sx={{fontWeight: 600}}>Words of the day</Typography>
+      <Stack spacing={2}>
         {words.map((word, counter) =>
-          <Card
-            border='primary'
-            key={counter}
-            style={{ width: '18rem' }}
-            className='mb-2'
-            onClick={() => alert(`Hello from here: ${word['original_word']}`)}
-          >
-            <Card.Body>
-              <Card.Title>{word['original_word']}</Card.Title>
-              <Card.Text>
+          <Card raised sx={{maxWidth: 500}}>
+            <CardContent>
+              <Typography variant="h5" component="div">
+                {word['original_word']}
+              </Typography>
+              <Typography color="text.secondary">
                 {word['translated_word']}
-              </Card.Text>
-            </Card.Body>
+              </Typography>
+            </CardContent>
+            <CardActions>
+              <Button size="small">Learn More</Button>
+            </CardActions>
           </Card>
         )}
-      </ul>
+      </Stack>
     </>
   );
 }
