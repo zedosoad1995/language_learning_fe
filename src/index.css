@@ -1,6 +1,7 @@
 /*@import '../node_modules/mini.css/dist/mini-default.min.css';*/
 
-@import 'bootstrap/dist/css/bootstrap.min.css';
+
+/* @import 'bootstrap/dist/css/bootstrap.min.css';
 .btn-toolbar {
     display: flex;
     flex-direction: row;
@@ -13,4 +14,4 @@
 
 [type="checkbox"]:checked:before {
     content: '';
-}
+} */
