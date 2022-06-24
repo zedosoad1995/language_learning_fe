@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import Fab from '@mui/material/Fab';
+import AddIcon from '@mui/icons-material/Add';
 import DailyUnseenWord from "./dailyUnseenWord";
 import WordsOfTheDay from "./wordsOfTheDay";
 import httpRequest from "../services/httpRequest"
@@ -38,11 +40,17 @@ function Home() {
     fetchData()
   }
 
+  const fabStyle = {
+    position: 'absolute',
+    bottom: 16,
+    right: 16,
+  }
+
   return (
     <>
-      <button onClick={() => navigate("/add_word")}>
-        Add Word
-      </button>
+      <Fab color="primary" aria-label="add" sx={fabStyle} onClick={() => navigate("/add_word")}>
+        <AddIcon />
+      </Fab>
       { isDailyWordsSeen ? 
       <WordsOfTheDay words={words}/> 
       : <DailyUnseenWord words={words} onUpdateWords={onUpdateDailyUnseenWords}/>}
