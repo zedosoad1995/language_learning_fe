@@ -23,10 +23,10 @@ export default function Header(){
                 <Button color="inherit" variant="outlined"  onClick={() => {navigate('/logout')}}>Logout</Button>
               </>
             :
-              <>
+              <Box sx={{marginLeft: 'auto'}}>
                 <Button color="inherit" variant="text"  onClick={() => {navigate('/register')}}>Register</Button>
                 <Button color="inherit" variant="outlined" onClick={() => {navigate('/login')}}>Login</Button>
-              </>
+              </Box>
           }
         </Toolbar>
       </AppBar>
