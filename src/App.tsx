@@ -10,9 +10,28 @@ import WordsList from "./components/wordsList";
 import WordDetail from "./components/wordDetail";
 import Container from '@mui/material/Container';
 import Box from '@mui/material/Box'
+import { useEffect } from "react"
+import { useSelector } from 'react-redux'
+import { logIn } from './slices/login'
+import { useDispatch } from 'react-redux'
 
 
 function App() {
+  const dispatch = useDispatch()
+
+  useEffect(() => {
+    const accessToken = localStorage.getItem('access_token')
+    const refreshToken = localStorage.getItem('refresh_token')
+
+    if(!accessToken || !refreshToken){
+      localStorage.removeItem('access_token')
+		  localStorage.removeItem('refresh_token')
+      window.location.href = '/login/';
+    }else{
+      dispatch(logIn())
+    }
+  }, [])
+
   return (
     <Router>
       <Header />
