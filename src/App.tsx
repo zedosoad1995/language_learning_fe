@@ -14,24 +14,22 @@ import Box from '@mui/material/Box'
 
 function App() {
   return (
-    <>
+    <Router>
       <Header />
       <Container maxWidth="sm">
         <Box sx={{m: 2}}>
-          <Router>
-            <Routes>
-              <Route path="/" element={<Home/>} />
-              <Route path="/add_word" element={<AddWord/>} />
-              <Route path="/login" element={<SignIn />} />
-              <Route path="/register" element={<SignUp />} />
-              <Route path="/logout" element={<Logout />} />
-              <Route path="/word_list" element={<WordsList />} />
-              <Route path="/word/:id" element={<WordDetail />} />
-            </Routes>
-          </Router>
+          <Routes>
+            <Route path="/" element={<Home/>} />
+            <Route path="/add_word" element={<AddWord/>} />
+            <Route path="/login" element={<SignIn />} />
+            <Route path="/register" element={<SignUp />} />
+            <Route path="/logout" element={<Logout />} />
+            <Route path="/word_list" element={<WordsList />} />
+            <Route path="/word/:id" element={<WordDetail />} />
+          </Routes>
         </Box>
       </Container>
-    </>
+    </Router>
   );
 }
 

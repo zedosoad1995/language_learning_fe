@@ -48,7 +48,7 @@ function AddWord() {
 
   return (
     <Paper variant="outlined" sx={{ my: { xs: 3, md: 6 }, p: { xs: 2, md: 3 } }}>
-      <Typography variant="h5" sx={{mb: 2, fontWeight: 700}}>
+      <Typography variant="h5" align="center" sx={{mb: 4, fontWeight: 700}}>
         New Word
       </Typography>
       <Grid container spacing={3}>

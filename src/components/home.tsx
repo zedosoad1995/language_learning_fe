@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom";
 import Fab from '@mui/material/Fab';
 import Box from '@mui/material/Box'

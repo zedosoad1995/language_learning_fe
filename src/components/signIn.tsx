@@ -1,3 +1,4 @@
+import { useEffect } from "react"
 import * as React from 'react';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
@@ -12,8 +13,10 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom'
 import httpRequest from '../services/httpRequest';
+import { useSelector, useDispatch } from 'react-redux'
+import { logIn } from '../slices/login'
 
 
 function Copyright(props: any) {
@@ -34,6 +37,9 @@ const theme = createTheme();
 export default function SignIn() {
   const navigate = useNavigate();
 
+  const loggedIn = useSelector((state: any) => state.login.loggedIn)
+  const dispatch = useDispatch()
+
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
@@ -48,8 +54,15 @@ export default function SignIn() {
         localStorage.setItem('access_token', res.data.access)
         localStorage.setItem('refresh_token', res.data.refresh)
         navigate('/')
+        dispatch(logIn())
       })
   }
+
+  useEffect(() => {
+    if(loggedIn){
+      navigate('/')
+    }
+  }, [])
 
   return (
     <ThemeProvider theme={theme}>
