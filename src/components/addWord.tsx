@@ -3,53 +3,42 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import moment from 'moment';
 import { useNavigate } from 'react-router-dom';
+import { useState } from "react"
 import httpRequest from '../services/httpRequest';
+import Paper from '@mui/material/Paper'
+import Typography from '@mui/material/Typography'
+import Grid from '@mui/material/Grid'
+import TextField from '@mui/material/TextField'
+import Rating from '@mui/material/Rating'
+import Box from '@mui/material/Box'
+import FormControl from '@mui/material/FormControl'
+import FormHelperText from '@mui/material/FormHelperText'
+import Input from '@mui/material/Input'
+import InputLabel from '@mui/material/InputLabel'
+import Button from '@mui/material/Button'
 
-
-const schema = yup.object({
-  original: yup.string().typeError('Must be a string').required('Field is required'),
-  translation: yup.string().typeError('Must be a string').required('Field is required'),
-  knowledge: yup.number()
-                        .typeError('Must be a number')
-                        .integer('Must be an integer')
-                        .min(1, 'Min value is 1')
-                        .max(5, 'Max value is 5')
-                        .required('Field is required'),
-  relevance: yup.number()
-                        .typeError('Must be a number')
-                        .integer('Must be an integer')
-                        .min(1, 'Min value is 1')
-                        .max(5, 'Max value is 5')
-                        .required('Field is required'),
-}).required()
-
-function Input({ name, label, register, required }: any){
-  return (
-    <>
-      <label>{label}</label>
-      <input {...register(name, { required })} />
-      <br></br>
-    </>
-  );
-}
 
 function AddWord() {
-  const navigate = useNavigate();
+  const navigate = useNavigate()
+  const [original, setOriginal] = useState()
+  const [translated, setTranslated] = useState()
+  const [knowledge, setKnowledge] = useState(1)
+  const [relevance, setRelevance] = useState(1)
 
-  const { register, handleSubmit, watch, formState: { errors } } = useForm({
-    resolver: yupResolver(schema)
-  });
+  function onSubmit(e: any){
+    e.preventDefault()
 
-  function onSubmit(data: any){
     const date = new Date();
     const offset_minutes = -date.getTimezoneOffset()
 
+    const score: any = knowledge + 6 - relevance
+
     const payload = {
-      original_word: data['original'],
-      translated_word: data['translation'],
-      knowledge: data['knowledge'],
-      relevance: data['relevance'],
-      score: data['relevance'] + 6 - data['knowledge'],
+      original_word: original,
+      translated_word: translated,
+      knowledge: knowledge,
+      relevance: relevance,
+      score: score,
       created_at_local: moment(date).add(offset_minutes, 'm').format("YYYY-MM-DDTHH:mm:ss.sssZZ")
     }
 
@@ -58,17 +47,50 @@ function AddWord() {
   }
 
   return (
-    <>
-      <h1>New Word</h1>
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <Input name='original' label='Original' register={register} required />
-        <Input name='translation' label='Translation' register={register} required />
-        <Input name='knowledge' label='Knowledge (1-5)' register={register} required />
-        <Input name='relevance' label='Relevance (1-5)' register={register} required />
-        
-        <input type='submit'/>
-      </form>
-    </>
+    <Paper variant="outlined" sx={{ my: { xs: 3, md: 6 }, p: { xs: 2, md: 3 } }}>
+      <Typography variant="h5" sx={{mb: 2, fontWeight: 700}}>
+        New Word
+      </Typography>
+      <Grid container spacing={3}>
+        <Grid item xs={12}>
+          <TextField required fullWidth label='Original Word' id="original-word" value={original} onChange={(e: any) => {setOriginal(e.target.value)}} />
+        </Grid>
+        <Grid item xs={12}>
+          <TextField required fullWidth label='Translated Word' id="translated-word" value={translated} onChange={(e: any) => {setTranslated(e.target.value)}} />
+        </Grid>
+        <Grid item xs={12}>
+          <FormControl variant="standard">
+            <Typography>
+              Knowledge
+            </Typography>
+            <Rating
+              value={knowledge}
+              onChange={(_, newValue: any) => {
+                setKnowledge(newValue)
+              }}
+            />
+          </FormControl>
+        </Grid>
+        <Grid item xs={12}>
+          <FormControl variant="standard">
+            <Typography>
+              Relevance
+            </Typography>
+            <Rating
+              value={relevance}
+              onChange={(_, newValue: any) => {
+                setRelevance(newValue)
+              }}
+            />
+          </FormControl>
+        </Grid>
+        <Grid item xs={12}>
+          <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
+            <Button variant="contained" sx={{ mt: 3, ml: 1 }} onClick={(e) => {onSubmit(e)}}>Submit</Button>
+          </Box>
+        </Grid>
+      </Grid>
+    </Paper>
   );
 }
 
