@@ -59,6 +59,7 @@ export default function SignIn() {
   }
 
   useEffect(() => {
+    console.log('Login', loggedIn)
     if(loggedIn){
       navigate('/')
     }
