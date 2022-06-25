@@ -1,8 +1,14 @@
-import Card from 'react-bootstrap/Card'  
-import { useEffect, useState } from "react";
-import _ from 'lodash'
-import { Button, ButtonGroup, ToggleButton, ButtonToolbar, ListGroupItem, Form } from 'react-bootstrap';
-import httpRequest from '../services/httpRequest';
+import Typography from '@mui/material/Typography'
+import Card from '@mui/material/Card'
+import CardContent from '@mui/material/CardContent'
+import Checkbox from '@mui/material/Checkbox'
+import FormControlLabel from '@mui/material/FormControlLabel'
+import Rating from '@mui/material/Rating'
+import Button from '@mui/material/Button'
+import CardActions from '@mui/material/CardActions'
+import Divider from '@mui/material/Divider'
+import { useEffect, useState } from "react"
+import httpRequest from '../services/httpRequest'
 
 
 function DailyUnseenWord({words, onUpdateWords}: {words: Array<any>, onUpdateWords: any}) {
@@ -49,61 +55,44 @@ function DailyUnseenWord({words, onUpdateWords}: {words: Array<any>, onUpdateWor
 	return (
     <>
 			{word &&
-				<Card
-					border='primary'
-					key={word.pk}
-					style={{ width: '22rem' }}
-					className='mb-2'
-				>
-					<Card.Body>
-						<Card.Title>{word['original_word']}</Card.Title>
-						<Card.Text>
-							Translation: {word['translated_word']}
-						</Card.Text>
-						<Form.Check
-							onChange={() => {setWordLearned(!wordLearned)}}
-							type='checkbox'
-							label='I already know this word'
-							checked={wordLearned}
+				<Card key={word.id}>
+					<CardContent>
+						<Typography variant="h5">
+							{word['original_word']}
+						</Typography>
+						<Typography color="text.secondary">
+							{word['translated_word']}
+						</Typography>
+						<Divider sx={{my: 2}}/>
+						<Typography>
+							Knowledge
+						</Typography>
+						<Rating
+							value={knowledge}
+							onChange={(_, newValue: any) => {
+								setKnowledge(newValue);
+							}}
 						/>
-						<ButtonToolbar>
-							<ListGroupItem>Knowledge:</ListGroupItem>
-							<ButtonGroup>
-								{_.range(1, 5+1).map((val, idx) => (
-									<ToggleButton
-										key={idx}
-										id={`knowledge-${idx}`}
-										type="radio"
-										name="knowledge-buttons"
-										value={val}
-										checked={knowledge === val}
-										onChange={(e) => setKnowledge(parseInt(e.currentTarget.value))}
-									>
-										{val}
-									</ToggleButton>
-								))}
-							</ButtonGroup>
-						</ButtonToolbar>
-						<ButtonToolbar>
-							<ListGroupItem>Relevance:</ListGroupItem>
-							<ButtonGroup>
-								{_.range(1, 5+1).map((val, idx) => (
-									<ToggleButton
-										key={idx}
-										id={`relevance-${idx}`}
-										type="radio"
-										name="relevance-buttons"
-										value={val}
-										checked={relevance === val}
-										onChange={(e) => setRelevance(parseInt(e.currentTarget.value))}
-									>
-										{val}
-									</ToggleButton>
-								))}
-							</ButtonGroup>
-						</ButtonToolbar>
-						<Button onClick={nextWord}>Next</Button>
-					</Card.Body>
+						<Typography>
+							Relevance
+						</Typography>
+						<Rating
+							value={relevance}
+							onChange={(_, newValue: any) => {
+								setRelevance(newValue);
+							}}
+						/>
+						<FormControlLabel 
+							sx={{display: 'block'}}
+							control={
+								<Checkbox onChange={() => {setWordLearned(!wordLearned)}} checked={wordLearned} />
+							} 
+							label='I already know this word' 
+						/>
+					</CardContent>
+					<CardActions>
+						<Button onClick={nextWord}>Next Word</Button>
+					</CardActions>
 				</Card>}
     </>
   );
