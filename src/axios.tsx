@@ -8,6 +8,7 @@ let axiosInfo: any = {
     headers: {
         'Content-Type': 'application/json',
         accept: 'application/json',
+		Authorization: ''
     },
 }
 
@@ -58,7 +59,12 @@ axiosInstance.interceptors.response.use(
 							localStorage.setItem('access_token', response.data.access);
 							localStorage.setItem('refresh_token', response.data.refresh);
 
-							return axiosInstance(originalRequest);
+							axiosInstance.defaults.headers.common['Authorization'] =
+								'JWT ' + response.data.access
+							originalRequest.headers['Authorization'] =
+								'JWT ' + response.data.access
+
+							return axiosInstance(originalRequest)
 						})
 						.catch((err) => {
 							console.log(err);

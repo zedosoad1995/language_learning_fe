@@ -21,12 +21,12 @@ function WordDetail() {
 			is_learned: word.is_learned
 		}
 		httpRequest('PATCH', `words/${id}/`, data)
-			.then(() => navigate(-1))
+			.then(() => navigate('/'))
 	}
 
 	const onRemove = () => {
 		httpRequest('DEL', `words/${id}/`)
-			.then(() => navigate(-1))
+			.then(() => navigate('/'))
 	}
 
 	useEffect(() => {
