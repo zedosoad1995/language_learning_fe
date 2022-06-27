@@ -5,7 +5,7 @@ import ListItemText from '@mui/material/ListItemText'
 import IconButton from '@mui/material/IconButton'
 import DeleteIcon from '@mui/icons-material/Delete'
 import { useNavigate } from 'react-router-dom'
-import { useEffect, useState } from "react"
+import { useEffect, useState, useMemo } from "react"
 import httpRequest from '../services/httpRequest'
 import SearchIcon from "@mui/icons-material/Search"
 import TextField from "@mui/material/TextField"
@@ -18,14 +18,12 @@ import Divider from "@mui/material/Divider"
 export default function WordsList() {
 	const [textFilter, setTextFilter]: [any, any] = useState('')
 	const [words, setWords]: [any, any] = useState([])
-	const [filteredWords, setFilteredWords]: [any, any] = useState([])
   const navigate = useNavigate()
 
   const updateList = () => {
     httpRequest('GET', `words/`)
       .then((response: any) => {
         setWords(response.data)
-        setFilteredWords(response.data.filter((word: any) => word.original_word.toLowerCase().startsWith(textFilter)))
       })
   }
 
@@ -33,9 +31,7 @@ export default function WordsList() {
 		updateList()
 	}, [])
 
-	useEffect(() => {
-    setFilteredWords(words.filter((word: any) => word.original_word.toLowerCase().startsWith(textFilter)))
-	}, [textFilter])
+  const filteredWords = useMemo(() => {return words.filter((word: any) => word.original_word.toLowerCase().startsWith(textFilter))}, [textFilter, words])
 
   const deleteWord = (e: any) => {
     const id = e.currentTarget.getAttribute('data-index')
@@ -57,7 +53,6 @@ export default function WordsList() {
   return (
     <>
       <Paper
-        component="form"
         sx={{ p: "2px 4px", display: "flex", alignItems: "center" }}
       >
         <InputBase
@@ -66,7 +61,7 @@ export default function WordsList() {
           inputProps={{ "aria-label": "search word" }}
           onChange={(e) => searchTextChanged(e)}
         />
-        <IconButton type="submit" sx={{ p: "10px" }} aria-label="search">
+        <IconButton sx={{ p: "10px" }} aria-label="search">
           <SearchIcon />
         </IconButton>
       </Paper>
