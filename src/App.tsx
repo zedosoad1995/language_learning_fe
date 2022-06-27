@@ -1,6 +1,7 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import './App.css';
 import SignIn from "./components/signIn";
+import SignUp from "./components/signUp";
 import Logout from "./components/logout";
 import Header from "./components/header";
 import Container from '@mui/material/Container';
@@ -17,6 +18,7 @@ function App() {
           <Routes>
             <Route path="*" element={<LoggedContent />} />
             <Route path="/login" element={<SignIn />} />
+            <Route path="/register" element={<SignUp />} />
             <Route path="/logout" element={<Logout />} />
           </Routes>
         </Box>

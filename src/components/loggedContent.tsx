@@ -36,7 +36,6 @@ function LoggedContent() {
     <Routes>
     <Route path="/" element={<Home/>} />
     <Route path="/add_word" element={<AddWord/>} />
-    <Route path="/register" element={<SignUp />} />
     <Route path="/word_list" element={<WordsList />} />
     <Route path="/word/:id" element={<WordDetail />} />
     </Routes>
