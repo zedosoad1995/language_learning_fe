@@ -25,7 +25,7 @@ export default function Header(){
             :
               <Box sx={{marginLeft: 'auto'}}>
                 <Button color="inherit" variant="text"  onClick={() => {navigate('/register')}}>Register</Button>
-                <Button color="inherit" variant="outlined" onClick={() => {navigate('/login')}}>Login</Button>
+                <Button color="inherit" variant="outlined" onClick={() => {navigate('/login')}} sx={{ml: 2}}>Login</Button>
               </Box>
           }
         </Toolbar>

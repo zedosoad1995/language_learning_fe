@@ -1,22 +1,27 @@
-import * as React from 'react';
-import Avatar from '@mui/material/Avatar';
-import Button from '@mui/material/Button';
-import CssBaseline from '@mui/material/CssBaseline';
-import TextField from '@mui/material/TextField';
-import Link from '@mui/material/Link';
-import Grid from '@mui/material/Grid';
-import Box from '@mui/material/Box';
-import Typography from '@mui/material/Typography';
-import Container from '@mui/material/Container';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { useNavigate } from 'react-router-dom';
-import httpRequest from '../services/httpRequest';
+import * as React from 'react'
+import Avatar from '@mui/material/Avatar'
+import Button from '@mui/material/Button'
+import CssBaseline from '@mui/material/CssBaseline'
+import TextField from '@mui/material/TextField'
+import Link from '@mui/material/Link'
+import Grid from '@mui/material/Grid'
+import Box from '@mui/material/Box'
+import Typography from '@mui/material/Typography'
+import Container from '@mui/material/Container'
+import { createTheme, ThemeProvider } from '@mui/material/styles'
+import { useState } from "react"
+import { useNavigate } from 'react-router-dom'
+import httpRequest from '../services/httpRequest'
+import InputLabel from '@mui/material/InputLabel'
+import FormControl from '@mui/material/FormControl'
+import NativeSelect from '@mui/material/NativeSelect'
 
 
 const theme = createTheme();
 
 export default function SignUp() {
   const navigate = useNavigate()
+  const [numDailyWords, setNumDailyWords]: [any, any] = useState(3)
 	
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -28,7 +33,8 @@ export default function SignUp() {
       email: data.get('email'),
       first_name: data.get('firstName'),
       last_name: data.get('lastName'),
-      timezone: Intl.DateTimeFormat().resolvedOptions().timeZone
+      timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+      num_daily_words: numDailyWords
     }
 
     localStorage.removeItem('access_token')
@@ -110,6 +116,30 @@ export default function SignUp() {
                   id="password"
                   autoComplete="new-password"
                 />
+              </Grid>
+              <Grid item xs={12}>
+                <FormControl sx={{ minWidth: 120 }}>
+                  <InputLabel variant="standard" htmlFor="daily-words">
+                    Daily Words
+                  </InputLabel>
+                  <NativeSelect
+                    defaultValue={3}
+                    inputProps={{
+                      name: 'dailyWords',
+                      id: 'daily-words',
+                    }}
+                    value={numDailyWords}
+                    onChange={(e) => {setNumDailyWords(e.target.value)}}
+                  >
+                    <option value={1}>1</option>
+                    <option value={3}>3</option>
+                    <option value={5}>5</option>
+                    <option value={10}>10</option>
+                    <option value={15}>15</option>
+                    <option value={20}>20</option>
+                    <option value={50}>50</option>
+                  </NativeSelect>
+                </FormControl>
               </Grid>
             </Grid>
             <Button
