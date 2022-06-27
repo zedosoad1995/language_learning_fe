@@ -19,6 +19,7 @@ export default function Header(){
                 <Box sx={{ flexGrow: 1, display: 'flex' }}>
                   <Button color="inherit"  onClick={() => {navigate('/')}}> Home </Button>
                   <Button color="inherit"  onClick={() => {navigate('/word_list')}}> Words </Button>
+                  <Button color="inherit"  onClick={() => {navigate('/settings')}}> Settings </Button>
                 </Box>
                 <Button color="inherit" variant="outlined"  onClick={() => {navigate('/logout')}}>Logout</Button>
               </>

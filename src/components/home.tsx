@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom"
-import Fab from '@mui/material/Fab';
-import AddIcon from '@mui/icons-material/Add';
-import DailyUnseenWord from "./dailyUnseenWord";
-import WordsOfTheDay from "./wordsOfTheDay";
+import Fab from '@mui/material/Fab'
+import Box from '@mui/material/Box'
+import AddIcon from '@mui/icons-material/Add'
+import DailyUnseenWord from "./dailyUnseenWord"
+import WordsOfTheDay from "./wordsOfTheDay"
 import httpRequest from "../services/httpRequest"
 
 
@@ -41,7 +42,7 @@ function Home() {
   }
 
   const fabStyle = {
-    position: 'absolute',
+    position: 'fixed',
     bottom: 16,
     right: 16,
   }
