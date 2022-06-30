@@ -39,7 +39,7 @@ function LoggedContent() {
     }
 
     getUser()
-  }, [user])
+  }, [JSON.stringify(user)])
 
   return (
     <Routes>
