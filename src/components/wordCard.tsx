@@ -6,16 +6,9 @@ import FormControlLabel from '@mui/material/FormControlLabel'
 import Rating from '@mui/material/Rating'
 import CardActions from '@mui/material/CardActions'
 import Divider from '@mui/material/Divider'
-import { useEffect, useState } from "react"
 
 
-function WordCard({singleWord, cardActions}: any) {
-	const [word, setWord]: [any, any] = useState()
-
-	useEffect(() => {
-		setWord(singleWord)
-	}, [JSON.stringify(singleWord)])
-
+function WordCard({word, cardActions, changeWord}: any) {
 	return (
     <>
 			{word &&
@@ -34,7 +27,7 @@ function WordCard({singleWord, cardActions}: any) {
 						<Rating
 							value={word.knowledge}
 							onChange={(_, newValue: any) => {
-								setWord({...word, knowledge: newValue})
+								changeWord({...word, knowledge: newValue})
 							}}
 						/>
 						<Typography>
@@ -43,13 +36,13 @@ function WordCard({singleWord, cardActions}: any) {
 						<Rating
 							value={word.relevance}
 							onChange={(_, newValue: any) => {
-								setWord({...word, relevance: newValue})
+								changeWord({...word, relevance: newValue})
 							}}
 						/>
 						<FormControlLabel 
 							sx={{display: 'block'}}
 							control={
-								<Checkbox onChange={() => {setWord({...word, is_learned: !word.is_learned})}} checked={word.is_learned} />
+								<Checkbox onChange={() => {changeWord({...word, is_learned: !word.is_learned})}} checked={word.is_learned} />
 							} 
 							label='I already know this word' 
 						/>

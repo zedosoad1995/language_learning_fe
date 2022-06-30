@@ -38,8 +38,12 @@ function TestCard({words, onUpdateWords}: {words: Array<any>, onUpdateWords: any
 		onUpdateWords()
   }, [JSON.stringify(words)])
 
+	const changeWord = (newWord: any) => {
+		setWord(newWord)
+	}
+
 	return (
-		<WordCard singleWord={word} cardActions={<Button onClick={nextWord}>Next Word</Button>}/>
+		<WordCard word={word} cardActions={<Button onClick={nextWord} >Next Word</Button>} changeWord={changeWord}/>
   );
 }
 

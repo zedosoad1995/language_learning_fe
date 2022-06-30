@@ -21,12 +21,12 @@ function WordDetail() {
 			is_learned: word.is_learned
 		}
 		httpRequest('PATCH', `words/${id}/`, data)
-			.then(() => navigate('/'))
+			.then(() => navigate(-1))
 	}
 
 	const onRemove = () => {
 		httpRequest('DEL', `words/${id}/`)
-			.then(() => navigate('/'))
+			.then(() => navigate(-1))
 	}
 
 	useEffect(() => {
@@ -36,13 +36,17 @@ function WordDetail() {
 			})
 	}, [])
 
+	const changeWord = (newWord: any) => {
+		setWord(newWord)
+	}
+
 	return (
-		<WordCard singleWord={word} cardActions={
+		<WordCard word={word} cardActions={
 			<>
 				<Button onClick={onEdit}>Edit</Button>
 				<Button onClick={onRemove}>Remove</Button>
 			</>
-		}/>
+		} changeWord={changeWord}/>
   );
 }
 
